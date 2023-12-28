@@ -1,0 +1,34 @@
+module RingCounter_tb;
+
+  // Declare signals for the testbench
+  reg clk;   // Clock signal
+  reg rst;   // Reset signal
+  wire [3:0] out; // Output signal from the module
+
+  // Instantiate the module
+  RingCounter dut (
+    .clk(clk),
+    .rst(rst),
+    .out(out)
+  );
+
+  // Clock generation
+  always #5 clk = ~clk; // Generating a clock with a period of 10 time units
+
+  // Testbench initial block
+  initial begin
+    clk = 0;  // Initialize clock
+    rst = 1;  // Set reset initially
+    #10;      // Wait for some time
+    rst = 0;  // Deassert reset
+
+    // Monitor the output
+    $display("Time\tOutput");
+    $monitor("%0t\t%b", $time, out);
+
+    // Run the simulation for 50 time units
+    #50;
+    $finish; // End the simulation
+  end
+
+endmodule
