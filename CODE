@@ -1,0 +1,19 @@
+module RINGCOUNTER(
+    input wire clk,
+    input wire rst,
+    output reg [3:0] out
+);
+
+// Always block triggered on positive edge of the clock
+always @(posedge clk or posedge rst)
+begin
+    if (rst) // Reset condition
+        out <= 4'b0001; // Initialize counter with the first bit high
+    else // Shift the bits in the counter
+        out <= {out[2:0], out[3]}; // Shift right
+end
+
+endmodule
+   
+  
+
